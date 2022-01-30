@@ -1,10 +1,10 @@
-function New-MHCAzureServer
+function New-AzureServer
     {
     <#
     .SYNOPSIS
-    Deploys VM in MHC Azure environment
+    Deploys VM in Azure
     .DESCRIPTION
-    Will deploy VM in Azure based on input and MHC standards.
+    Will deploy VM in Azure based on input and certain standards.
     .PARAMETER Name
     The name for the VM. Should always start with "AZ-" followed by a three-letter abbriviation for the region, three letters describing function
     and then two numbers. For example AZ-WEU-APP01 for an application server in Europe.
@@ -12,12 +12,12 @@ function New-MHCAzureServer
     The region the VM should be deployed to. Must be within a predefined set. Selecting Europe will choose West Europe as Azure region, America will
     choose East US, Asia will choose Southeast Asia.
     .PARAMETER Size
-    The size for the VM. Selection is based on MHC standards. For more info on VM sizes in Azure, refer to https://docs.microsoft.com/en-us/azure/virtual-machines/sizes
+    The size for the VM. Selection is based on standards. For more info on VM sizes in Azure, refer to https://docs.microsoft.com/en-us/azure/virtual-machines/sizes
     Can be changed manually after deployment.
     .PARAMETER OS
-    The operating system for the VM. Follows MHC standards and therefore your only choice is Windows or Linux, more specific OS/distro will be chosen for you.
+    The operating system for the VM. Follows standards and therefore your only choice is Windows or Linux, more specific OS/distro will be chosen for you.
     .EXAMPLE
-    New-MHCAzureServer -Name "AZ-WEU-APP01" -Region Europe -Size D2s -OS Windows
+    New-AzureServer -Name "AZ-WEU-APP01" -Region Europe -Size D2s -OS Windows
     Will deploy a VM named AZ-WEU-APP01 in the West Europe region in Azure. Size will be D2s
     .LINK
     https://pettertech.com
