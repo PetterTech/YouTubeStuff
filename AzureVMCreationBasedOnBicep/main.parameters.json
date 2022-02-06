@@ -1,0 +1,39 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+      "adminUsername":{
+        "value": "petter"
+      },
+      "adminPassword":{
+          "value": "ThisIsMySecretPassw0rd!"
+      },
+      "vmName":{
+        "value": "changemeName"
+      },
+      "location":{
+          "value": "changemeLocation"
+      },
+      "deployingUser":{
+          "value": "changemeDeployingUser"
+      },
+      "vmSize":{
+          "value": "changemeVMSize"
+      },
+      "imageOffer":{
+          "value": "changemeImageOffer"
+      },
+      "imageSku":{
+          "value": "changemeImageSku"
+      },
+      "imageVersion":{
+          "value": "changemeImageVersion"
+      },
+      "imagePublisher":{
+          "value": "changemeImagePublisher"
+      },
+      "subnetID":{
+          "value": "changemeSubnetID"
+      }
+    }
+  }
