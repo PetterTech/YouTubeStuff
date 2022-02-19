@@ -1,5 +1,4 @@
 param now string = utcNow('yyyyMMdd')
-@secure()
 param adminUsername string
 @secure()
 param adminPassword string
@@ -40,6 +39,7 @@ resource vm 'Microsoft.Compute/virtualMachines@2021-07-01' = {
   location: location
     tags: {
       DeployedBy: deployingUser
+      DeploymentDate: now
     }
   properties: {
     hardwareProfile: {

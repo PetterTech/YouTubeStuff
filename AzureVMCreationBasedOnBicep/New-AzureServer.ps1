@@ -40,31 +40,11 @@ function New-AzureServer
     Begin {
 	    #Verify that name is within standards and matches region
         Write-Progress -Activity "Deploying Azure server" -Status "In preparation phase" -CurrentOperation "Validating that VM name is within standards"
-        if ($Region -eq "Europe") {
-            Write-Verbose "Region is Europe"
-            if (!($Name -like "az-weu-*")) {
-                Write-Verbose "VM name does not follow standards, input was: $($Name)"
-                Write-Error "VM name does not comply with naming standard"
-            }
-            Write-Verbose "VM name complies with standards"
-        }
-
-        if ($Region -eq "America") {
-            Write-Verbose "Region is America"
-            if (!($Name -like "az-eus-*")) {
-                Write-Verbose "VM name does not follow standards, input was: $($Name)"
-                Write-Error "VM name does not comply with naming standard"
-            }
-            Write-Verbose "VM name complies with standards"
-        }
-
-        if ($Region -eq "Asia") {
-            Write-Verbose "Region is Asia"
-            if (!($Name -like "az-sea-*")) {
-                Write-Verbose "VM name does not follow standards, input was: $($Name)"
-                Write-Error "VM name does not comply with naming standard"
-            }
-            Write-Verbose "VM name complies with standards"
+        Write-Verbose "Input region was $($Region) and input name was $($Name)"
+        switch ($Region) {
+            "America" {if (!($Name -like "az-eus-*")) {Write-Error "VM name does not comply with naming standard" -ErrorAction Stop}}
+            "Europe" {if (!($Name -like "az-weu-*")) {Write-Error "VM name does not comply with naming standard" -ErrorAction Stop}}
+            "Asia" {if (!($Name -like "az-sea-*")) {Write-Error "VM name does not comply with naming standard" -ErrorAction Stop}}
         }
         Write-Progress -Activity "Deploying Azure server" -Status "In preparation phase" -CurrentOperation "Validating that VM name is within standards" -Completed
 
@@ -78,7 +58,7 @@ function New-AzureServer
         catch {
             Write-Verbose "Something failed during name conversion"
             $Error[0] | Out-Host
-            Write-Error "Failed to convert VM name to uppercase"
+            Write-Error "Failed to convert VM name to uppercase" -ErrorAction Stop
         }
         Write-Progress -Activity "Deploying Azure server" -Status "In preparation phase" -CurrentOperation "Converting servername to uppercase" -Completed
 
@@ -96,11 +76,9 @@ function New-AzureServer
         Write-Verbose "Done converting size to Azure formatted size name. Output: $($VMsize)"
 
         if ($VMSize -eq "Borked") {
-            Write-Error "Failed to match size to Azure readable size"
+            Write-Error "Failed to match size to Azure readable size" -ErrorAction Stop
         }
         Write-Progress -Activity "Deploying Azure server" -Status "In preparation phase" -CurrentOperation "Converting size to Azure readable size" -Completed
-
-        #Get session variables
 
         #Get username
         $DeployingUser = [Environment]::UserName
@@ -109,74 +87,111 @@ function New-AzureServer
         Write-Progress -Activity "Deploying Azure server" -Status "In preparation phase" -CurrentOperation "Connecting to Azure"
         try {
             Write-Verbose "Trying to connect to Azure"
-            Connect-AzAccount | Out-Null
+            Connect-AzAccount -ErrorAction Stop | Out-Null
             Write-Verbose "Attempt complete"
         }
         catch {
             Write-Verbose "Something failed during connection to Azure"
             $Error[0] | Out-Host
-            Write-Error "Failed to connect to Azure"
+            Write-Error "Failed to connect to Azure" -ErrorAction Stop
         }
         Write-Progress -Activity "Deploying Azure server" -Status "In preparation phase" -CurrentOperation "Connecting to Azure" -Completed
 
-        #Get correct resource group based on region
+        #Checking if servername is already in use
+        Write-Progress -Activity "Deploying Azure server" -Status "In preparation phase" -CurrentOperation "Verifying availability of servername"
+        try {
+            Write-Verbose "Checking to see if $($Name) is already taken"
+            if (($null -eq (Get-AzVM -Name $Name))) {
+                Write-Verbose "VM name is available"
+            }
+            else {
+                $takenVM = Get-AzVM -Name $Name
+                Write-Verbose "Servername is taken by $($takenVM.Id)"
+                Write-Error "Servername is already in use in Azure" -ErrorAction Stop
+            }
+        }
+        catch {
+            Write-Error "Servername is taken" -ErrorAction Stop
+        }
+        Write-Progress -Activity "Deploying Azure server" -Status "In preparation phase" -CurrentOperation "Verifying availability of servername" -Completed
 
         #Get correct region as a variabe
         Write-Progress -Activity "Deploying Azure server" -Status "In preparation phase" -CurrentOperation "Getting correct Azure region"
         try {
-            $AllAzRegions = Get-AzLocation
+            Write-Verbose "Getting all Azure regions"
+            $AllAzRegions = Get-AzLocation -ErrorAction Stop
         }
         catch {
             Write-Verbose "Something failed during Azure region getting"
             $Error[0] | Out-Host
-            Write-Error "Failed to get correct Azure region"                 
+            Write-Error "Failed to get all Azure regions" -ErrorAction Stop                
         }
 
         try {
+            Write-Verbose "Getting correct region based on input. Input was: $($Region)"
             switch ($Region) {
                 "America" {$AzRegion = $AllAzRegions | Where-Object {$_.Location -eq "eastus"}}
                 "Europe" {$AzRegion = $AllAzRegions | Where-Object {$_.Location -eq "westeurope"}}
                 "Asia" {$AzRegion = $AllAzRegions | Where-Object {$_.Location -eq "southeastasia"}}
-                Default {$vNet = "Borked"}
+                Default {$AzRegion = "Borked"}
             }
-            if ($vNet -eq "Borked") {
-                Write-Error "Failed to match region to vNet"
+            Write-Verbose "Got this region: $($AzRegion.Location)"
+            if ($AzRegion -eq "Borked") {
+                Write-Error "Failed to get correct region" -ErrorAction Stop
             }            
         }
         catch {
-            Write-Verbose "Something failed during vNet getting"
+            Write-Verbose "Something failed during region getting"
             $Error[0] | Out-Host
-            Write-Error "Failed to get correct vNet"            
+            Write-Error "Failed to get correct region" -ErrorAction Stop
         }
         Write-Progress -Activity "Deploying Azure server" -Status "In preparation phase" -CurrentOperation "Getting correct Azure region" -Completed
 
-        #Get correct vNet
+        #Get correct vNet based on region
         Write-Progress -Activity "Deploying Azure server" -Status "In preparation phase" -CurrentOperation "Getting correct vNet"
         try {
+            Write-Verbose "Getting correct vNet based on input. Input was: $($Region)"
             switch ($Region) {
-                "America" {$vNet = Get-AzVirtualNetwork -Name vnet-america}
+                "America" {$vNet = Get-AzVirtualNetwork -Name vnet-americas}
                 "Europe" {$vNet = Get-AzVirtualNetwork -Name vnet-europe}
                 "Asia" {$vNet = Get-AzVirtualNetwork -Name vnet-asia}
-                Default {$vNet = "Borked"}
             }
-            if ($vNet -eq "Borked") {
-                Write-Error "Failed to match region to vNet"
-            }            
+            Write-Verbose "vNet gotten: $($vNet.Name)"
+            if ($null -eq $vNet) {
+                Write-Error "Failed to match region to vNet" -ErrorAction Stop
+            }
         }
         catch {
             Write-Verbose "Something failed during vNet getting"
             $Error[0] | Out-Host
-            Write-Error "Failed to get correct vNet"            
+            Write-Error "Failed to get correct vNet" -ErrorAction Stop          
         }
         Write-Progress -Activity "Deploying Azure server" -Status "In preparation phase" -CurrentOperation "Getting correct vNet" -Completed
 
-        #Get subnet ID
+        #Get subnet
+        Write-Progress -Activity "Deploying Azure server" -Status "In preparation phase" -CurrentOperation "Getting correct subnet"
         try {
-            $subnet = $vNet | Get-AzVirtualNetworkSubnetConfig
+            Write-Verbose "Getting correct subnet, based on input. Input was: $($vNet.Name)"
+            $subnet = $vNet | Get-AzVirtualNetworkSubnetConfig -ErrorAction Stop
         }
         catch {
-            Write-Error "Failed to get subnet"
+            Write-Error "Failed to get subnet" -ErrorAction Stop
         }
+        Write-Progress -Activity "Deploying Azure server" -Status "In preparation phase" -CurrentOperation "Getting correct subnet" -Completed
+
+        #Get correct resource group based on vNet
+        Write-Progress -Activity "Deploying Azure server" -Status "In preparation phase" -CurrentOperation "Getting target resource"
+        try {
+            Write-Verbose "Getting target resource group, based on vNet resourcegroup. Input: $($vNet.ResourceGroupName)"
+            $targetResourceGroup = Get-AzResourceGroup -Name $vNet.ResourceGroupName -ErrorAction Stop
+            Write-Verbose "Got this resourcegroup: $($targetResourceGroup.ResourceGroupName)"
+        }
+        catch {
+            Write-Verbose "Something failed during resource group getting"
+            $Error[0] | Out-Host
+            Write-Error "Failed to get correct resource group" -ErrorAction Stop
+        }
+        Write-Progress -Activity "Deploying Azure server" -Status "In preparation phase" -CurrentOperation "Getting target resource" -Completed
 
         #Get correct VM image SKU
         Write-Progress -Activity "Deploying Azure server" -Status "In preparation phase" -CurrentOperation "Getting correct VM image SKU"
@@ -187,7 +202,7 @@ function New-AzureServer
                 Default {$ImageSKU = "Borked"}
             }
             if ($ImageSKU -eq "Borked") {
-                Write-Error "Failed to match OS to image"
+                Write-Error "Failed to match OS to image" -ErrorAction Stop
             }            
         }
         catch {
@@ -195,53 +210,55 @@ function New-AzureServer
             $Error[0] | Out-Host
             Write-Error "Failed to get correct image"            
         }
-
         Write-Progress -Activity "Deploying Azure server" -Status "In preparation phase" -CurrentOperation "Getting correct VM image SKU" -Completed
         
     }
 
     Process {
-        #Create bicep parameter file based on template
-        #Grab default parameter file
+        #Converting default password to secure string
+        Write-Progress -Activity "Deploying Azure server" -Status "In deployment phase" -CurrentOperation "Converting default password to secure string"
         try {
-            $DefaultParameterFile = Get-Content .\main.parameters.json | ConvertFrom-Json
+            $Password = "ThisIsMySecretPassw0rd!" | ConvertTo-SecureString -AsPlainText -Force -ErrorAction Stop
         }
         catch {
-            Write-Error "Failed to import default parameter file"
+            Write-Verbose "Something failed during convertion of password to secure string"
+            $Error[0] | Out-Host
+            Write-Error "Failed to convert password to secure string"   
         }
-
-        #Editing parameter file
-        $DefaultParameterFile.parameters.vmName.value = $Name
-        $DefaultParameterFile.parameters.location.value = $AzRegion.DisplayName
-        $DefaultParameterFile.parameters.deployingUser.value = $DeployingUser
-        $DefaultParameterFile.parameters.vmSize.value = $VMSize
-        $DefaultParameterFile.parameters.imageOffer.value = $ImageSKU.offer
-        $DefaultParameterFile.parameters.imageSku.value = $ImageSKU.skus
-        $DefaultParameterFile.parameters.imageVersion.value = $ImageSKU.Version
-        $DefaultParameterFile.parameters.imagePublisher.value = $ImageSKU.PublisherName
-        $DefaultParameterFile.parameters.subnetID.value = $subnet.Id
-
-        #Exporting to new parameter file
-        $DefaultParameterFile | ConvertTo-Json | Out-File .\newparameterfile.json
+        Write-Progress -Activity "Deploying Azure server" -Status "In deployment phase" -CurrentOperation "Converting default password to secure string" -Completed
 
         #Deploy vm
+        Write-Progress -Activity "Deploying Azure server" -Status "In deployment phase" -CurrentOperation "Running deployment"
         try {
-          New-AzResourceGroupDeployment -ResourceGroupName "rg-EULandingZone" -TemplateFile .\main.bicep -TemplateParameterFile .\newparameterfile.json
+          New-AzResourceGroupDeployment -ResourceGroupName $targetResourceGroup.ResourceGroupName -TemplateFile .\main.bicep `
+           -adminUsername "Petter" `
+           -adminPassword $Password `
+           -vmName $Name `
+           -location $AzRegion.DisplayName `
+           -deployingUser $DeployingUser `
+           -vmSize $VMSize `
+           -imageOffer $ImageSKU.Offer `
+           -imageSku $ImageSKU.skus `
+           -imageVersion $ImageSKU.Version `
+           -imagePublisher $ImageSKU.PublisherName `
+           -subnetID $subnet.Id `
+           -ErrorAction Stop
         }
         catch {
           $Error[0] | Out-Host
           Write-Error "Deployment failed"  
         }
+        Write-Progress -Activity "Deploying Azure server" -Status "In deployment phase" -CurrentOperation "Running deployment" -Completed
     }
 
     End {
         #Disconnect from Azure
+        Write-Progress -Activity "Deploying Azure server" -Status "In cleanup phase" -CurrentOperation "Disconnecting from Azure"
         try {
-        Disconnect-AzAccount | Out-Null
-            
+        Disconnect-AzAccount -ErrorAction Stop | Out-Null
         }
         catch {
-            
         }
+        Write-Progress -Activity "Deploying Azure server" -Status "In cleanup phase" -CurrentOperation "Disconnecting from Azure" -Completed
     }
 }
