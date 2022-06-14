@@ -87,6 +87,7 @@ Get-Process -Name notepad | ForEach-Object {Stop-Process $_}
 #
 
 # With the statement
+1..100 | ForEach-Object {start-process notepad.exe}
 Measure-Command {
     foreach ($process in (Get-Process -Name notepad)) {
         Stop-Process $process
@@ -94,11 +95,13 @@ Measure-Command {
 }
 
 # With the method
+1..100 | ForEach-Object {start-process notepad.exe}
 Measure-Command {
     (Get-Process -Name notepad).foreach('Kill')
 }
 
 # With the cmdlet
+1..100 | ForEach-Object {start-process notepad.exe}
 Measure-Command {
     Get-Process -Name notepad | ForEach-Object {Stop-Process $_}
 }
