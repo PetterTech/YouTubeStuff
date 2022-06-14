@@ -1,4 +1,4 @@
-#Geting things to loop through
+#Getting things to loop through
 $aFewNumbers = 1..1337
 $services = Get-Service
 
