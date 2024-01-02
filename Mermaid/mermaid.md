@@ -203,6 +203,50 @@ gitGraph:
     commit id: "Post merge stuff"
     commit id: "Final?"
 ```
+## Mindmap
+
+``` mermaid
+mindmap
+  root((My brain))
+    id))Dungeons & Dragons((
+      id{{One campaign}}
+        id((DM tasks))
+          Create world
+          Prepare
+          Run
+          Follow up
+      id{{Another Campaign}}
+        id((Halldur
+        Trubadur))
+          Bard
+          Dwarven heritage
+          Support
+          Spells
+    ))YouTube((
+      id{{Ideas}}
+        id)Azure(
+          EPAC
+          Arc
+          AVD
+        Code stuff
+          Powershell
+          Bicep
+        id)Windows 365(
+            Boot
+            Use
+```
+
+## Timeline
+
+``` mermaid
+%%{init: { 'logLevel': 'debug', 'theme': 'base' } }%%
+timeline
+    title PetterTech YouTube channel
+    2015: Creation of channel
+    2021: February <br> First video posted : June <br> Rebrand to PetterTech : October <br> First video to hit 1000 views
+    2022: August <br> Reached a total of 25 uploads : September <br> First video to hit 10k views
+    2023: October <br> Reached 1000 subscribers <br> : November <br> Eligible for YouTube partnership
+```
 
 ## Class diagram
 
@@ -272,49 +316,4 @@ stateDiagram-v2
         ScrollLockOff --> ScrollLockOn : EvCapsLockPressed
         ScrollLockOn --> ScrollLockOff : EvCapsLockPressed
     }
-```
-
-## Mindmap
-
-``` mermaid
-mindmap
-  root((My brain))
-    id))Dungeons & Dragons((
-      id{{One campaign}}
-        id((DM tasks))
-          Create world
-          Prepare
-          Run
-          Follow up
-      id{{Another Campaign}}
-        id((Halldur
-        Trubadur))
-          Bard
-          Dwarven heritage
-          Support
-          Spells
-    ))YouTube((
-      id{{Ideas}}
-        id)Azure(
-          EPAC
-          Arc
-          AVD
-        Code stuff
-          Powershell
-          Bicep
-        id)Windows 365(
-            Boot
-            Use
-```
-
-## Timeline
-
-``` mermaid
-%%{init: { 'logLevel': 'debug', 'theme': 'base' } }%%
-timeline
-    title PetterTech YouTube channel
-    2015: Creation of channel
-    2021: February <br> First video posted : June <br> Rebrand to PetterTech : October <br> First video to hit 1000 views
-    2022: August <br> Reached a total of 25 uploads : September <br> First video to hit 10k views
-    2023: October <br> Reached 1000 subscribers <br> : November <br> Eligible for YouTube partnership
 ```
