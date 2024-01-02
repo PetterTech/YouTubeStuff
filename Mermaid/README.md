@@ -20,10 +20,10 @@ flowchart LR
     id4 <--> id7 --> id6
 
     style id1 fill:green,stroke:black
-    style id2 fill:white,stroke:#f66,stroke-dasharray: 5, 5
+    style id2 fill:white,stroke:#f66,stroke-dasharray: 5, 5,color:black
     style id3 fill:#66f,stroke:#f6f,stroke-width:4px
     style id4 fill:red,stroke:yellow
-    style id5 fill:orange,stroke:white
-    style id6 fill:yellow,stroke:blue
+    style id5 fill:orange,stroke:white,color:black
+    style id6 fill:yellow,stroke:blue,color:black
     style id7 fill:brown,stroke:blue
 ```
