@@ -2,7 +2,7 @@
 
 This folder contains examples of Mermaid diagrams. Just random things you can do with Mermaid, like this thing:
 
-::: mermaid
+``` mermaid
 flowchart LR
     id1(Box with round corner)
     id2([Stadium])
@@ -26,4 +26,4 @@ flowchart LR
     style id5 fill:orange,stroke:white
     style id6 fill:yellow,stroke:blue
     style id7 fill:brown,stroke:blue
-:::
+```
