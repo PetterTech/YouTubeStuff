@@ -45,6 +45,34 @@ flowchart TD
     style F fill:navy,stroke:black,stroke-width:2px,shadow:shadow
 ```
 
+## Flowchart with lots of options and neatly arranged code
+
+``` mermaid
+flowchart LR
+    id1(Box with round corner)
+    id2([Stadium])
+    id3[(Database)]
+    id4((Circle))
+    id5{{Hex}}
+    id6[\Parallelogram\]
+    id7[\Trapezoid/]
+
+    id1-- 1st line ---id2
+    id1--> |2nd line| id3
+    id1--- |3rd line| id4
+    id2-.-|4th line| id5
+    id3 == 5th line ==> id6
+    id4 <--> id7 --> id6
+
+    style id1 fill:green,stroke:black
+    style id2 fill:white,stroke:#f66,stroke-dasharray: 5, 5
+    style id3 fill:#66f,stroke:#f6f,stroke-width:4px
+    style id4 fill:red,stroke:yellow
+    style id5 fill:orange,stroke:white
+    style id6 fill:yellow,stroke:blue
+    style id7 fill:brown,stroke:blue
+```
+
 # Simple gantt
 
 ``` mermaid
@@ -107,6 +135,75 @@ sequenceDiagram
     Bob-->>John: Jolly good!
 ```
 
+## Quadrant diagram
+
+``` mermaid
+quadrantChart
+    x-axis x1 --> x2
+    y-axis y1 --> y2
+    quadrant-1 Comment
+    quadrant-2 Like
+    quadrant-3 Subscribe
+    quadrant-4 Share
+```
+
+## Quadrant diagram with dots
+
+``` mermaid
+quadrantChart
+    x-axis x1 --> x2
+    y-axis y1 --> y2
+    quadrant-1 Comment
+    quadrant-2 Like
+    quadrant-3 Subscribe
+    quadrant-4 Share
+    dot1: [0.3, 0.7]
+    dot2: [0.6, 0.2]
+    dot3: [0.8, 0.9]
+    dot4: [0.2, 0.4]
+    dot5: [0.6, 0.7]
+```
+
+## Quadrant diagram with dots, colors and stuff
+
+``` mermaid
+%%{init: {"quadrantChart": {"chartWidth": 500, "chartHeight": 500}, "themeVariables": {"quadrant1Fill": "#5abf5f","quadrant2Fill": "#24bda8","quadrant3Fill": "red","quadrant4Fill": "#bd5e24","quadrantTitleFill": "green", "quadrantPointFill": "black", "quadrantPointTextFill": "black", "quadrant1TextFill": "white", "quadrant2TextFill": "white", "quadrant3TextFill": "white", "quadrant4TextFill": "white"} }}%%
+quadrantChart
+    title Quadrant Diagram
+    x-axis first on x --> second on x
+    y-axis first on y --> second on y
+    quadrant-1 Top right
+    quadrant-2 Top left
+    quadrant-3 Bottom left
+    quadrant-4 Bottom right
+    Dot1: [0.3, 0.7]
+    Dot2: [0.6, 0.2]
+    Dot3: [0.8, 0.9]
+    Dot4: [0.2, 0.4]
+    Dot5: [0.5, 0.1]
+    Dot6: [0.1, 0.3]
+```
+
+## Simple gitGraph diagram
+
+``` mermaid
+gitGraph:
+    commit id: "Initial commit"
+    commit id: "Did stuff"
+    
+    branch branchingOff
+    
+    checkout branchingOff
+    commit id: "Did some branch stuff"
+    commit id: "Did more branch stuff"
+    checkout main
+    commit id: "Did some more stuff"
+    merge branchingOff id: "Merging back"
+
+    commit id: "Post merge stuff"
+    commit id: "Final?"
+```
+
 ## Class diagram
 
 ``` mermaid
@@ -147,6 +244,17 @@ erDiagram
 
 ## State diagrams
 
+
+``` mermaid
+stateDiagram-v2
+    [*] --> Still
+    Still --> [*]
+    Still --> Moving
+    Moving --> Still
+    Moving --> Crash
+    Crash --> [*]
+```
+
 ``` mermaid
 stateDiagram-v2
     [*] --> Active
@@ -165,40 +273,48 @@ stateDiagram-v2
         ScrollLockOn --> ScrollLockOff : EvCapsLockPressed
     }
 ```
+
+## Mindmap
+
 ``` mermaid
-stateDiagram-v2
-    [*] --> Still
-    Still --> [*]
-    Still --> Moving
-    Moving --> Still
-    Moving --> Crash
-    Crash --> [*]
+mindmap
+  root((My brain))
+    id))Dungeons & Dragons((
+      id{{One campaign}}
+        id((DM tasks))
+          Create world
+          Prepare
+          Run
+          Follow up
+      id{{Another Campaign}}
+        id((Halldur
+        Trubadur))
+          Bard
+          Dwarven heritage
+          Support
+          Spells
+    ))YouTube((
+      id{{Ideas}}
+        id)Azure(
+          EPAC
+          Arc
+          AVD
+        Code stuff
+          Powershell
+          Bicep
+        id)Windows 365(
+            Boot
+            Use
 ```
 
-## Flowchart with lots of options and neatly arranged code
+## Timeline
 
 ``` mermaid
-flowchart LR
-    id1(Box with round corner)
-    id2([Stadium])
-    id3[(Database)]
-    id4((Circle))
-    id5{{Hex}}
-    id6[\Parallelogram\]
-    id7[\Trapezoid/]
-
-    id1-- 1st line ---id2
-    id1--> |2nd line| id3
-    id1--- |3rd line| id4
-    id2-.-|4th line| id5
-    id3 == 5th line ==> id6
-    id4 <--> id7 --> id6
-
-    style id1 fill:green,stroke:black
-    style id2 fill:white,stroke:#f66,stroke-dasharray: 5, 5
-    style id3 fill:#66f,stroke:#f6f,stroke-width:4px
-    style id4 fill:red,stroke:yellow
-    style id5 fill:orange,stroke:white
-    style id6 fill:yellow,stroke:blue
-    style id7 fill:brown,stroke:blue
+%%{init: { 'logLevel': 'debug', 'theme': 'base' } }%%
+timeline
+    title PetterTech YouTube channel
+    2015: Creation of channel
+    2021: February <br> First video posted : June <br> Rebrand to PetterTech : October <br> First video to hit 1000 views
+    2022: August <br> Reached a total of 25 uploads : September <br> First video to hit 10k views
+    2023: October <br> Reached 1000 subscribers <br> : November <br> Eligible for YouTube partnership
 ```
