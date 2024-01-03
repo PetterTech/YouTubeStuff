@@ -208,9 +208,9 @@ gitGraph:
 ``` mermaid
 mindmap
   root((My brain))
-    id))Dungeons & Dragons((
-      id{{One campaign}}
-        id((DM tasks))
+    ))Dungeons & Dragons((
+      {{One campaign}}
+        ((DM tasks))
           Aethenia
             Kingdoms
             Cities
@@ -221,8 +221,8 @@ mindmap
           Run
           Follow up
           Help players
-      id{{Another Campaign}}
-        id((Halldur
+      {{Another Campaign}}
+        ((Halldur
         Trubadur))
           Bard
           Dwarven heritage
@@ -230,11 +230,11 @@ mindmap
           Spells
           Linene
     ))YouTube((
-      id{{Follow up}}
+      {{Follow up}}
         Comments
         Suggestions
-      id{{Create content}}
-        id)Azure(
+      {{Create content}}
+        )Azure(
           EPAC
           Arc
           AVD
@@ -245,7 +245,7 @@ mindmap
           Bicep
           Mermaid
           IaC
-        id)Windows 365(
+        )Windows 365(
             Boot
             Use
             Features
