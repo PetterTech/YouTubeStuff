@@ -113,10 +113,10 @@ gantt
 ``` mermaid
 pie 
     showData
-    title Pets adopted by volunteers
-    "Dogs" : 386
-    "Cats" : 85
-    "Rats" : 15
+    title PetterTech's content
+    "Windows 365" : 13
+    "Azure" : 28
+    "PowerShell" : 3
 ```
 
 ## Sequence diagram
@@ -211,10 +211,16 @@ mindmap
     id))Dungeons & Dragons((
       id{{One campaign}}
         id((DM tasks))
-          Create world
+          Aethenia
+            Kingdoms
+            Cities
+            Villages
+            NPCs
+            Deities
           Prepare
           Run
           Follow up
+          Help players
       id{{Another Campaign}}
         id((Halldur
         Trubadur))
@@ -222,18 +228,28 @@ mindmap
           Dwarven heritage
           Support
           Spells
+          Linene
     ))YouTube((
-      id{{Ideas}}
+      id{{Follow up}}
+        Comments
+        Suggestions
+      id{{Create content}}
         id)Azure(
           EPAC
           Arc
           AVD
+          Dev Box
+          Spot VMs
         Code stuff
           Powershell
           Bicep
+          Mermaid
+          IaC
         id)Windows 365(
             Boot
             Use
+            Features
+            News
 ```
 
 ## Timeline
