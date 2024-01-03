@@ -119,69 +119,12 @@ pie
     "PowerShell" : 3
 ```
 
-## Sequence diagram
-
+## Sankey diagram
 ``` mermaid
-sequenceDiagram
-    participant Alice
-    participant Bob
-    Alice->>John: Hello John, how are you?
-    loop Healthcheck
-        John->>John: Fight against hypochondria
-    end
-    Note right of John: Rational thoughts <br/>prevail...
-    John-->>Alice: Great!
-    John->>Bob: How about you?
-    Bob-->>John: Jolly good!
-```
-
-## Quadrant diagram
-
-``` mermaid
-quadrantChart
-    x-axis x1 --> x2
-    y-axis y1 --> y2
-    quadrant-1 Comment
-    quadrant-2 Like
-    quadrant-3 Subscribe
-    quadrant-4 Share
-```
-
-## Quadrant diagram with dots
-
-``` mermaid
-quadrantChart
-    x-axis x1 --> x2
-    y-axis y1 --> y2
-    quadrant-1 Comment
-    quadrant-2 Like
-    quadrant-3 Subscribe
-    quadrant-4 Share
-    dot1: [0.3, 0.7]
-    dot2: [0.6, 0.2]
-    dot3: [0.8, 0.9]
-    dot4: [0.2, 0.4]
-    dot5: [0.6, 0.7]
-```
-
-## Quadrant diagram with dots, colors and stuff
-
-``` mermaid
-%%{init: {"quadrantChart": {"chartWidth": 500, "chartHeight": 500}, "themeVariables": {"quadrant1Fill": "#5abf5f","quadrant2Fill": "#24bda8","quadrant3Fill": "red","quadrant4Fill": "#bd5e24","quadrantTitleFill": "green", "quadrantPointFill": "black", "quadrantPointTextFill": "black", "quadrant1TextFill": "white", "quadrant2TextFill": "white", "quadrant3TextFill": "white", "quadrant4TextFill": "white"} }}%%
-quadrantChart
-    title Quadrant Diagram
-    x-axis first on x --> second on x
-    y-axis first on y --> second on y
-    quadrant-1 Top right
-    quadrant-2 Top left
-    quadrant-3 Bottom left
-    quadrant-4 Bottom right
-    Dot1: [0.3, 0.7]
-    Dot2: [0.6, 0.2]
-    Dot3: [0.8, 0.9]
-    Dot4: [0.2, 0.4]
-    Dot5: [0.5, 0.1]
-    Dot6: [0.1, 0.3]
+sankey-beta
+Work-week,Writing,14
+Work-week,Drawing,10
+Work-week,Meetings,16
 ```
 
 ## Simple gitGraph diagram
@@ -264,6 +207,73 @@ timeline
     2023: October <br> Reached 1000 subscribers <br> : November <br> Eligible for YouTube partnership
 ```
 
+
+## Sequence diagram
+
+``` mermaid
+sequenceDiagram
+    participant Alice
+    participant Bob
+    Alice->>John: Hello John, how are you?
+    loop Healthcheck
+        John->>John: Fight against hypochondria
+    end
+    Note right of John: Rational thoughts <br/>prevail...
+    John-->>Alice: Great!
+    John->>Bob: How about you?
+    Bob-->>John: Jolly good!
+```
+
+## Quadrant diagram
+
+``` mermaid
+quadrantChart
+    x-axis x1 --> x2
+    y-axis y1 --> y2
+    quadrant-1 Comment
+    quadrant-2 Like
+    quadrant-3 Subscribe
+    quadrant-4 Share
+```
+
+## Quadrant diagram with dots
+
+``` mermaid
+quadrantChart
+    x-axis x1 --> x2
+    y-axis y1 --> y2
+    quadrant-1 Comment
+    quadrant-2 Like
+    quadrant-3 Subscribe
+    quadrant-4 Share
+    dot1: [0.3, 0.7]
+    dot2: [0.6, 0.2]
+    dot3: [0.8, 0.9]
+    dot4: [0.2, 0.4]
+    dot5: [0.6, 0.7]
+```
+
+## Quadrant diagram with dots, colors and stuff
+
+``` mermaid
+%%{init: {"quadrantChart": {"chartWidth": 500, "chartHeight": 500}, "themeVariables": {"quadrant1Fill": "#5abf5f","quadrant2Fill": "#24bda8","quadrant3Fill": "red","quadrant4Fill": "#bd5e24","quadrantTitleFill": "green", "quadrantPointFill": "black", "quadrantPointTextFill": "black", "quadrant1TextFill": "white", "quadrant2TextFill": "white", "quadrant3TextFill": "white", "quadrant4TextFill": "white"} }}%%
+quadrantChart
+    title Quadrant Diagram
+    x-axis first on x --> second on x
+    y-axis first on y --> second on y
+    quadrant-1 Top right
+    quadrant-2 Top left
+    quadrant-3 Bottom left
+    quadrant-4 Bottom right
+    Dot1: [0.3, 0.7]
+    Dot2: [0.6, 0.2]
+    Dot3: [0.8, 0.9]
+    Dot4: [0.2, 0.4]
+    Dot5: [0.5, 0.1]
+    Dot6: [0.1, 0.3]
+```
+
+
 ## Class diagram
 
 ``` mermaid
@@ -334,10 +344,3 @@ stateDiagram-v2
     }
 ```
 
-## Sankey diagram
-``` mermaid
-sankey-beta
-Work-week,Writing,14
-Work-week,Drawing,10
-Work-week,Meetings,16
-```
