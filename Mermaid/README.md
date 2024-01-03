@@ -27,3 +27,5 @@ flowchart LR
     style id6 fill:yellow,stroke:blue,color:black
     style id7 fill:brown,stroke:blue
 ```
+
+Check out the mermaid.md file to see more examples
