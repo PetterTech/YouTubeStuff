@@ -333,3 +333,11 @@ stateDiagram-v2
         ScrollLockOn --> ScrollLockOff : EvCapsLockPressed
     }
 ```
+
+## Sankey diagram
+``` mermaid
+sankey-beta
+Work-week,Writing,14
+Work-week,Drawing,10
+Work-week,Meetings,16
+```
