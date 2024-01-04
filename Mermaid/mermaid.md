@@ -64,8 +64,12 @@ flowchart LR
     id1--> |2nd line| id3
     id1--- |3rd line| id4
     id2-.-|4th line| id5
+    subgraph A box around stuf
     id3 == 5th line ==> id6
+    end
+    subgraph Another box around stuff
     id4 <--> id7 --> id6
+    end
 
     style id1 fill:green,stroke:black
     style id2 fill:white,stroke:#f66,stroke-dasharray: 5, 5
