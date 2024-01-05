@@ -210,6 +210,27 @@ timeline
     2023: October <br> Reached 1000 subscribers <br> : November <br> Eligible for YouTube partnership
 ```
 
+## Journey
+
+``` mermaid
+    journey
+        title A PetterTech day
+        section Mornings
+            Wake up: 1
+            Eat breakfast: 5
+            Walk the dog: 6
+            Go to work at home office: 8
+        section Working day
+            Work: 8
+            Lunch: 9
+            Work: 7
+            End work: 9
+        section Evenings
+            Dinner: 8
+            Stuff with the kids: 8
+            Walk the dog: 8
+            Sleep: 8
+```
 
 ## Sequence diagram
 
